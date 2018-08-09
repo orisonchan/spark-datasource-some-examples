@@ -14,10 +14,10 @@ class TPCDSDataSource extends SchemaRelationProvider {
                                sqlContext: SQLContext,
                                parameters: Map[String, String],
                                schema: StructType
-                             ): BaseRelation = TPCDSScanNoAggPushDown(schema, parameters)(sqlContext)
+                             ): BaseRelation = TPCDSScan(schema, parameters)(sqlContext)
 }
 
-case class TPCDSScanNoAggPushDown(s: StructType, parameters: Map[String, String])(@transient val context: SQLContext)
+case class TPCDSScan(s: StructType, parameters: Map[String, String])(@transient val context: SQLContext)
   extends BaseRelation
     with PrunedFilteredScan
     with Logging {
@@ -158,18 +158,4 @@ case class TPCDSScanNoAggPushDown(s: StructType, parameters: Map[String, String]
     val requiredSchema = columnsIndices.map(x => schema(x)).toSeq
     sqlContext.createDataFrame(projectRDD, StructType(requiredSchema)).rdd
   }
-}
-
-object FilterType extends Enumeration {
-  type FilterType = Value
-  val gt: examples.FilterType.Value = Value("GreaterThan")
-  val gte: examples.FilterType.Value = Value("GreaterThanOrEqual")
-  val eq: examples.FilterType.Value = Value("Equal")
-  val lt: examples.FilterType.Value = Value("LessThan")
-  val lte: examples.FilterType.Value = Value("LessThanOrEqual")
-  val in: examples.FilterType.Value = Value("in")
-  val isNotNull: examples.FilterType.Value = Value("isNotNull")
-  val isNull: examples.FilterType.Value = Value("isNull")
-  val and: examples.FilterType.Value = Value("And")
-  val or: examples.FilterType.Value = Value("Or")
 }

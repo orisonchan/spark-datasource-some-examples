@@ -2,7 +2,7 @@ package org.apache.spark.sql.sources
 
 import org.apache.spark.sql.test.SharedSQLContext
 
-class TestTPCDSNoAggPushDownSuite extends DataSourceTest with SharedSQLContext {
+class TestTPCDSSuite extends DataSourceTest with SharedSQLContext {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
