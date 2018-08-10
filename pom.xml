@@ -4,17 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.orisonchan</groupId>
-  <artifactId>tpcds-datasource</artifactId>
+  <groupId>org.orisonchan.spark</groupId>
+  <artifactId>datasource-examples</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
     <scala.version>2.11.8</scala.version>
     <scala.macros.version>2.1.0</scala.macros.version>
     <scala.binary.version>2.11</scala.binary.version>
-    <spark.version>2.1.0.cloudera1</spark.version>
-    <hadoop.version>2.6.0-cdh5.8.0</hadoop.version>
-    <hive.jdbc.version>1.1.0-cdh5.8.0</hive.jdbc.version>
+    <spark.version>2.1.0</spark.version>
+    <hadoop.version>2.6.0</hadoop.version>
+    <hive.jdbc.version>1.1.0</hive.jdbc.version>
   </properties>
 
   <repositories>
@@ -40,10 +40,6 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-    </repository>
-    <repository>
-      <id>cloudera</id>
-      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
     </repository>
   </repositories>
 
@@ -95,6 +91,7 @@
 
   <build>
     <outputDirectory>target/scala-${scala.binary.version}/classes</outputDirectory>
+    <testSourceDirectory>${basedir}/src/test/scala</testSourceDirectory>
     <testOutputDirectory>target/scala-${scala.binary.version}/test-classes</testOutputDirectory>
     <plugins>
       <plugin>
@@ -151,19 +148,14 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest-maven-plugin</artifactId>
+        <version>1.0</version>
         <executions>
           <execution>
+            <id>test</id>
             <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>test-jar-on-test-compile</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>test-jar</goal>
+              <goal>test</goal>
             </goals>
           </execution>
         </executions>
